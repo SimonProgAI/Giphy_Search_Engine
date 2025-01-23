@@ -12,15 +12,26 @@
 </head>
 <body>
     <section>
-        <form class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="search">
-            <button class="btn btn-outline-success" type = "button" value="search">Search</button>
-            <button class="btn btn-outline-info" type = "button" value="translate">Translate</button>
-            <button class="btn btn-outline-warning" type = "button" value="random">Random</button>
+        <header class="m-3">
+           <h1 >Giphy Search Engine</h1> 
+        </header>
+    </section>
+    <section>
+        <form>
+            <div class="justify-content-center">
+                <input class="form-control m-2" type="search" placeholder="Search" aria-label="Search" id="search">
+            </div>
+            <br>
+            <div class="container-fluid">
+                <button class="btn btn-outline-success m-2" type = "button" value="search">Search</button>
+                <button class="btn btn-outline-info m-2" type = "button" value="translate">Translate</button>
+                <button class="btn btn-outline-warning m-2" type = "button" value="random">Random</button>
+            </div>
         </form>
     </section>
     <section>
         <div id="outputArea">
+
 
         </div>
     </section>
@@ -37,31 +48,41 @@
         alert(userInput)
     })
     $.ajax({
-        url: "https://api.giphy.com/v1/gifs?api_key=4tKwhKPWWq390IPqlgoNcXivYLWIiQxq"
+        url: "https://api.giphy.com/v1/gifs/search?api_key=4tKwhKPWWq390IPqlgoNcXivYLWIiQxq&q=cats"
     })
 
 })*/
 
-const outputArea = document.getElementById('outputArea');
+let outputArea = document.getElementById('outputArea');
 
 
-function handleUserInput(event){
+document.addEventListener('click', function(){
     event.preventDefault();
-    let userInput = document.getElementById('search').value;
+    if(event.target.tagName === "BUTTON"){
+        handleUserInput();
+    };
+})
+
+function handleUserInput(){
+    
     let clickValue = event.target.value;
-    outputArea.innerText = `User Input: ${userInput}, Clicked Button: ${clickValue}`;
-    console.log(outputArea.innerText);
+    let apiKey = "4tKwhKPWWq390IPqlgoNcXivYLWIiQxq";
+    let userInput = document.getElementById('search').value;
+
+    let url = `https://api.giphy.com/v1/gifs/${clickValue}?api_key=${apiKey}&q=${userInput}`;
+    outputArea.innerHTML = url;
+    
+    fetch(url)
+        .then(data => data.json())
+    
 }
 
-document.addEventListener('click', function(event){
-    if(event.target.tagName === "BUTTON"){
-        handleUserInput(event);
-    }
-});
+
+
 /*
 **detect when submit clicked**
 **grab user input**
-use user input in our api call
+**use user input in our api call**
 parse the resonse
 display data accordingly
 */
