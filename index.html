@@ -30,37 +30,23 @@
         </form>
     </section>
     <section>
-        <div id="outputArea">
-
-
-        </div>
+        <div id="outputArea"></div>
     </section>
-    
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" 
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" 
         crossorigin="anonymous">
     </script>
     <script>
-/*$(document).ready(()=>{
-
-    $("#submit").click(()=>{
-        let userInput = $("#search").val()
-        alert(userInput)
-    })
-    $.ajax({
-        url: "https://api.giphy.com/v1/gifs/search?api_key=4tKwhKPWWq390IPqlgoNcXivYLWIiQxq&q=cats"
-    })
-
-})*/
-
 let outputArea = document.getElementById('outputArea');
 
-
 document.addEventListener('click', function(){
-    event.preventDefault();
+    
     if(event.target.tagName === "BUTTON"){
+        event.preventDefault();
         handleUserInput();
-    };
+    }else if (event.target.tagName === "A"){
+        handleUserInput();
+    }
 })
 
 function handleUserInput(){
@@ -70,15 +56,10 @@ function handleUserInput(){
     let userInput = document.getElementById('search').value;
 
     let url = `https://api.giphy.com/v1/gifs/${clickValue}?api_key=${apiKey}&q=${userInput}`;
-    outputArea.innerHTML = url;
-    
-    fetch(url)
-        .then(data => data.json())
+    outputArea.innerHTML = `<a href="${url}" target="_blank">${url}</a>`;
+    //NEXT: FETCH!
     
 }
-
-
-
 /*
 **detect when submit clicked**
 **grab user input**
