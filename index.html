@@ -37,14 +37,13 @@
         crossorigin="anonymous">
     </script>
     <script>
-let outputArea = document.getElementById('outputArea');
+let outputArea = document.getElementById('outputArea');//lookup onload, declared outside, but put inside of an onload function
 
+window.onload = function onLoad(){
+    outputArea;
+}
 document.addEventListener('click', function(){
-    
     if(event.target.tagName === "BUTTON"){
-        event.preventDefault();
-        handleUserInput();
-    }else if (event.target.tagName === "A"){
         handleUserInput();
     }
 })
@@ -54,11 +53,25 @@ function handleUserInput(){
     let clickValue = event.target.value;
     let apiKey = "4tKwhKPWWq390IPqlgoNcXivYLWIiQxq";
     let userInput = document.getElementById('search').value;
+    let baseUrl = `https://api.giphy.com/v1/gifs/${clickValue}?api_key=${apiKey}`;
+    let enpointUrl;   
+    if(clickValue === "search"){
+        endpointUrl = `&q=${userInput}`;
+    }else if (clickValue === "translate"){
+        endpointUrl = `&s=${userInput}`;
+    }else if (clickValue === "random"){
+        endpointUrl = `&tag`;
+    };
+    let url = baseUrl + endpointUrl;
+   
 
-    let url = `https://api.giphy.com/v1/gifs/${clickValue}?api_key=${apiKey}&q=${userInput}`;
+    //let // wont work for translate, useless info for random
     outputArea.innerHTML = `<a href="${url}" target="_blank">${url}</a>`;
-    //NEXT: FETCH!
-    
+    fetch(url)
+        .then(data => data.json())
+        .then(jsonObject => {
+            let 
+        })
 }
 /*
 **detect when submit clicked**
