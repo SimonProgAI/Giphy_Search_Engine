@@ -9,6 +9,9 @@
         crossorigin="anonymous"
     />
     <link rel="stylesheet" href="./style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Zen+Dots&display=swap" rel="stylesheet">
 </head>
 <body>
     <section>
@@ -18,20 +21,18 @@
     </section>
     <section>
         <form>
-            <div class="justify-content-center">
-                <input class="form-control m-2" type="search" placeholder="Search" aria-label="Search" id="search">
-            </div>
-            <br>
-            <div class="container-fluid">
-                <button class="btn btn-outline-success m-2" type = "button" value="search">Search</button>
-                <button class="btn btn-outline-info m-2" type = "button" value="translate">Translate</button>
-                <button class="btn btn-outline-warning m-2" type = "button" value="random">Random</button>
+            <div id="searchInput">
+                <input class="form-control" type="search" placeholder="Search" aria-label="Search" id="search">
+                <button class="btn btn-outline-success " type="button" value="search">Search</button>
+                <button class="btn btn-outline-info" type="button" value="translate">Translate</button>
+                <button class="btn btn-outline-warning" type="button" value="random">Random</button>
             </div>
         </form>
     </section>
     <section>
-        <div id="outputArea"></div>
+        <div class="text-lg-center" id="outputArea"></div>
     </section>
+    <!--REMOVE IF NOT USED-->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" 
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" 
         crossorigin="anonymous">
@@ -42,6 +43,7 @@ let outputArea = document.getElementById('outputArea');
 window.onload = function onLoad(){
     outputArea;
 }
+
 document.addEventListener('click', function(){
     if(event.target.tagName === "BUTTON"){
         event.preventDefault();
@@ -55,48 +57,58 @@ function handleUserInput(){
     let apiKey = "4tKwhKPWWq390IPqlgoNcXivYLWIiQxq";
     let userInput = document.getElementById('search').value;
     let baseUrl = `https://api.giphy.com/v1/gifs/${clickValue}?api_key=${apiKey}`;
-    let enpointUrl;   
+    let enpointUrl;
     if(clickValue === "search"){
-        endpointUrl = `&q=${userInput}`;
+        endpointUrl = `&q=${userInput}&limit=25`;
     }else if (clickValue === "translate"){
         endpointUrl = `&s=${userInput}`;
     }else if (clickValue === "random"){
         endpointUrl = `&tag`;
     };
+
     let url = baseUrl + endpointUrl;
     let fetchStem = fetch(url).then(rawObject => rawObject.json());
+    
     if (clickValue ==="search"){
         fetchStem
             .then(parsedObject => parsedObject.data)
             .then(arrayFrom_parsedObject => {
                 let processedResult = arrayFrom_parsedObject
                     .map(result => `
-                        <img src="${result.images.original.url}">
+                        <a href="${result.images.original.url}" target="_blank">
+                            <img src="${result.images.original.url}" class="giphyImages">
+                        </a>
                     `)
-                    .join('')
                     outputArea.innerHTML = processedResult;
                     console.log(processedResult);
-            });
-    }else if (clickValue ==="translate" || clickValue ==="random"){
+            })
+            .catch((error) => 
+                alert('Something went wrong while fetching your request. Please try again.'
+            ));
+    }else if (clickValue ==="translate"||clickValue ==="random"){
         fetchStem
             .then(parsedObject => {
-                let processedResult = `<img src="${parsedObject.data.images.original.url}">`;
+                let processedResult = `
+                    <a href="${parsedObject.data.images.original.url}" target="_blank">
+                        <img src="${parsedObject.data.images.original.url}" class="giphyImages">
+                    </a>
+                `;
                 outputArea.innerHTML = processedResult;
                 console.log(processedResult);
-            });
+            })
+            .catch((error) => 
+                alert('Something went wrong while fetching your request. Please try again.'
+            ));
     }
 }
-  
-//make the images an active link
-//how many per pages
-//multiple pages of result
-//event listener for 'enter' key stroke
-//error handling
-//CSS and esthetic of the page
-// center results for translate and random
-//refactor the handleUserInput funtion
-//rating option
 
+//event listener for 'enter' key stroke, as an alternative to clicking search button.
+//how many results per pages - user can choose by clicking a button
+
+//refactor the handleUserInput funtion
+//CSS and esthetic of the page -- Desktop mode, mobile mode
+//multiple pages of result
+//rating option - g, pg, pg13, M
 
     </script>
     <!--<script src="./main.js"></script>-->
