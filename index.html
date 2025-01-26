@@ -37,13 +37,14 @@
         crossorigin="anonymous">
     </script>
     <script>
-let outputArea = document.getElementById('outputArea');//lookup onload, declared outside, but put inside of an onload function
+let outputArea = document.getElementById('outputArea');
 
 window.onload = function onLoad(){
     outputArea;
 }
 document.addEventListener('click', function(){
     if(event.target.tagName === "BUTTON"){
+        event.preventDefault();
         handleUserInput();
     }
 })
@@ -63,23 +64,39 @@ function handleUserInput(){
         endpointUrl = `&tag`;
     };
     let url = baseUrl + endpointUrl;
-   
-
-    //let // wont work for translate, useless info for random
-    outputArea.innerHTML = `<a href="${url}" target="_blank">${url}</a>`;
-    fetch(url)
-        .then(data => data.json())
-        .then(jsonObject => {
-            let 
-        })
+    let fetchStem = fetch(url).then(rawObject => rawObject.json());
+    if (clickValue ==="search"){
+        fetchStem
+            .then(parsedObject => parsedObject.data)
+            .then(arrayFrom_parsedObject => {
+                let processedResult = arrayFrom_parsedObject
+                    .map(result => `
+                        <img src="${result.images.original.url}">
+                    `)
+                    .join('')
+                    outputArea.innerHTML = processedResult;
+                    console.log(processedResult);
+            });
+    }else if (clickValue ==="translate" || clickValue ==="random"){
+        fetchStem
+            .then(parsedObject => {
+                let processedResult = `<img src="${parsedObject.data.images.original.url}">`;
+                outputArea.innerHTML = processedResult;
+                console.log(processedResult);
+            });
+    }
 }
-/*
-**detect when submit clicked**
-**grab user input**
-**use user input in our api call**
-parse the resonse
-display data accordingly
-*/
+  
+//make the images an active link
+//how many per pages
+//multiple pages of result
+//event listener for 'enter' key stroke
+//error handling
+//CSS and esthetic of the page
+// center results for translate and random
+//refactor the handleUserInput funtion
+//rating option
+
 
     </script>
     <!--<script src="./main.js"></script>-->
