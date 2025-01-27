@@ -10,108 +10,33 @@
     />
     <link rel="stylesheet" href="./style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Zen+Dots&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noticia+Text:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 </head>
 <body>
     <section>
-        <header class="m-3">
-           <h1 >Giphy Search Engine</h1> 
+        <header>
+           <h1>Giphy Search Engine</h1> 
         </header>
     </section>
     <section>
         <form>
-            <div id="searchInput">
-                <input class="form-control" type="search" placeholder="Search" aria-label="Search" id="search">
-                <button class="btn btn-outline-success " type="button" value="search">Search</button>
-                <button class="btn btn-outline-info" type="button" value="translate">Translate</button>
-                <button class="btn btn-outline-warning" type="button" value="random">Random</button>
+            <div class="container userInputSection">
+                <div>
+                    <input class="form-control" type="search" placeholder="Search content here..." aria-label="Search" id="searchBar">
+                </div>
+                <div id="btnContainer">
+                    <button class="btn btn-outline-success" type="button" value="search" id="searchBtn" onclick="handleUserInput()">Search</button>
+                    <button class="btn btn-outline-primary" type="button" value="translate">Translate</button>
+                    <button class="btn btn-outline-warning" type="button" value="random">Random</button>
+                </div>
             </div>
         </form>
     </section>
     <section>
-        <div class="text-lg-center" id="outputArea"></div>
+        <div id="outputArea"></div>
     </section>
-    <!--REMOVE IF NOT USED-->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" 
-        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" 
-        crossorigin="anonymous">
-    </script>
-    <script>
-let outputArea = document.getElementById('outputArea');
-
-window.onload = function onLoad(){
-    outputArea;
-}
-
-document.addEventListener('click', function(){
-    if(event.target.tagName === "BUTTON"){
-        event.preventDefault();
-        handleUserInput();
-    }
-})
-
-function handleUserInput(){
-    
-    let clickValue = event.target.value;
-    let apiKey = "4tKwhKPWWq390IPqlgoNcXivYLWIiQxq";
-    let userInput = document.getElementById('search').value;
-    let baseUrl = `https://api.giphy.com/v1/gifs/${clickValue}?api_key=${apiKey}`;
-    let enpointUrl;
-    if(clickValue === "search"){
-        endpointUrl = `&q=${userInput}&limit=25`;
-    }else if (clickValue === "translate"){
-        endpointUrl = `&s=${userInput}`;
-    }else if (clickValue === "random"){
-        endpointUrl = `&tag`;
-    };
-
-    let url = baseUrl + endpointUrl;
-    let fetchStem = fetch(url).then(rawObject => rawObject.json());
-    
-    if (clickValue ==="search"){
-        fetchStem
-            .then(parsedObject => parsedObject.data)
-            .then(arrayFrom_parsedObject => {
-                let processedResult = arrayFrom_parsedObject
-                    .map(result => `
-                        <a href="${result.images.original.url}" target="_blank">
-                            <img src="${result.images.original.url}" class="giphyImages">
-                        </a>
-                    `)
-                    outputArea.innerHTML = processedResult;
-                    console.log(processedResult);
-            })
-            .catch((error) => 
-                alert('Something went wrong while fetching your request. Please try again.'
-            ));
-    }else if (clickValue ==="translate"||clickValue ==="random"){
-        fetchStem
-            .then(parsedObject => {
-                let processedResult = `
-                    <a href="${parsedObject.data.images.original.url}" target="_blank">
-                        <img src="${parsedObject.data.images.original.url}" class="giphyImages">
-                    </a>
-                `;
-                outputArea.innerHTML = processedResult;
-                console.log(processedResult);
-            })
-            .catch((error) => 
-                alert('Something went wrong while fetching your request. Please try again.'
-            ));
-    }
-}
-
-//event listener for 'enter' key stroke, as an alternative to clicking search button.
-//how many results per pages - user can choose by clicking a button
-
-//refactor the handleUserInput funtion
-//CSS and esthetic of the page -- Desktop mode, mobile mode
-//multiple pages of result
-//rating option - g, pg, pg13, M
-
-    </script>
-    <!--<script src="./main.js"></script>-->
+    <script src="./main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
         crossorigin="anonymous">
