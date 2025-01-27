@@ -5,7 +5,7 @@ let searchBar = document.getElementById('searchBar');
 window.onload = function onLoad(){
     outputArea;
 } 
-//EVENTS LISTENERS
+//EVENT LISTENERS
 searchBar.addEventListener('keypress', function(event){
     if(event.key === 'Enter') {
         console.log(event.key);
