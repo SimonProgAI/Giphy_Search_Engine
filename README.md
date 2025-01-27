@@ -13,13 +13,13 @@ PROJECT_2_SIMON LUPIEN
 4. If USer instead clicks Random, a single random result is returned.
 
 The main JavaScript funtionalities used are the fetch promise and event listeners.
-The structure of index.html is done with HTML/Bootstrap
-The styling is done with CSS
+The structure of index.html is done with HTML/Bootstrap.
+The styling is done with CSS.
 
 --IDEAS FOR IMPROVEMENT--
 A button click to choose how many results are displayed on the page.
 A refactoring of the handleUserInput function in main.js.
-A refactoring of both eventListener into a single function.
+A refactoring of both event listeners into a single function.
 Implementing the ability to navigate multiple pages of results.
 Implementing a rating system in the search (G, PG, PG13, M).
 
