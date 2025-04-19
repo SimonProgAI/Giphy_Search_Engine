@@ -1,4 +1,4 @@
-PROJECT_2_SIMON LUPIEN
+Giphy Search Engine
 
 --USER STORIES--
 1. As a Giphy enthusiast, I want to be surprised by funny random Giphys.
