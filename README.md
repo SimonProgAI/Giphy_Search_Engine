@@ -12,7 +12,7 @@ This web application allows users to search for Giphys, view random or translate
 
 ## Installation
 1. Clone the repository:
-    ```powershell
+    ```sh
     git clone https://github.com/SimonProgAI/Project_2_Simon_Lupien.git
     ```
 2. Open the project folder in your code editor.
